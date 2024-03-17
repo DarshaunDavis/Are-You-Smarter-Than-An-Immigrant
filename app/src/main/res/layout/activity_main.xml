@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:padding="16dp">
 
+    <!-- Include the header layout and assign an ID for positioning -->
+    <include
+        android:id="@+id/headerLayout"
+        layout="@layout/layout_header"/>
+
+    <!-- Adjusted to be below the included header layout -->
     <TextView
+        android:id="@+id/tauntTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/headerLayout"
+    android:layout_marginTop="20dp"
+    android:text="Can you beat the streak?"
+    android:textAlignment="center"
+    android:textSize="16sp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Other elements positioned relative to the tauntTextBox as before -->
+    <Button
+        android:id="@+id/startQuizButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tauntTextBox"
+        android:layout_marginTop="20dp"
+        android:text="Start Quiz"/>
+
+    <TextView
+        android:id="@+id/signInLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/startQuizButton"
+        android:layout_marginTop="16dp"
+        android:text="Sign in to save your progress"
+        android:textSize="14sp"
+        android:textColor="#FF6200EE" />
+
+</RelativeLayout>
