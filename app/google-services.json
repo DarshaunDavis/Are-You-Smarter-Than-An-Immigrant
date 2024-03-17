@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "382676304849",
+    "project_id": "are-you-smarter-than-an-immig",
+    "storage_bucket": "are-you-smarter-than-an-immig.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382676304849:android:85d0212b582589f0f016f0",
+        "android_client_info": {
+          "package_name": "com.lislal.areyousmarterthananimmigrant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvhPOhtsz3b36wOW3yuwr7Xt4t3iSjjPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

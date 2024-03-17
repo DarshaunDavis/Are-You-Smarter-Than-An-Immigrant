@@ -3,73 +3,84 @@ package com.lislal.areyousmarterthananimmigrant
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-    // UI Components
     private lateinit var currentScoreTextView: TextView
     private lateinit var highestScoreTextView: TextView
     private lateinit var startQuizButton: Button
     private lateinit var signInLinkTextView: TextView
+    private lateinit var setupDatabaseButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize UI Components
+        initializeUIComponents()
+        updateUIBasedOnUserState()
+        setClickListeners()
+    }
+
+    private fun initializeUIComponents() {
         currentScoreTextView = findViewById(R.id.currentScore)
         highestScoreTextView = findViewById(R.id.highestScore)
         startQuizButton = findViewById(R.id.startQuizButton)
         signInLinkTextView = findViewById(R.id.signInLink)
+        setupDatabaseButton = findViewById(R.id.setupDatabaseButton)
+    }
 
-        // Set up click listeners
+    private fun updateUIBasedOnUserState() {
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            // User is signed in
+            signInLinkTextView.visibility = View.GONE
+            checkUserRoleAndUpdateUI(auth.currentUser!!.uid)
+        } else {
+            // No user is signed in
+            signInLinkTextView.visibility = View.VISIBLE
+            setupDatabaseButton.visibility = View.GONE
+        }
+    }
+
+    private fun checkUserRoleAndUpdateUI(uid: String) {
+        // Assuming the role has been saved in SharedPreferences during login or registration
+        val sharedPref = getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        val userRole = sharedPref.getString("$uid-UserRole", "user")
+        setupDatabaseButton.visibility = if (userRole == "admin") View.VISIBLE else View.GONE
+    }
+
+    private fun setClickListeners() {
         startQuizButton.setOnClickListener {
-            QuestionPoolManager.initializeQuestionPool {
-                // Once questions are loaded, start the QuestionActivity
-                val intent = Intent(this@MainActivity, QuizActivity::class.java)
-                startActivity(intent)
-            }
+            val intent = Intent(this@MainActivity, QuizActivity::class.java)
+            startActivity(intent)
         }
 
-        val setupDatabaseButton: Button = findViewById(R.id.setupDatabaseButton)
         setupDatabaseButton.setOnClickListener {
             val intent = Intent(this, DatabaseSetupActivity::class.java)
             startActivity(intent)
         }
 
         signInLinkTextView.setOnClickListener {
-            // Handle Sign-In (This could redirect to a Sign-In Activity)
-            // For example:
-            // val signInIntent = Intent(this, SignInActivity::class.java)
-            // startActivity(signInIntent)
+            val intent = Intent(this, RegistrationActivity::class.java)
+            startActivity(intent)
         }
-
-        // For demonstration purposes, update the score directly here
-        // In a real app, you would update these values based on the user's progress and actions
-        updateScores(currentScore = 5, highestScore = 10)
-    }
-
-    private fun updateScores(currentScore: Int, highestScore: Int) {
-        currentScoreTextView.text = "Current Score: $currentScore"
-        highestScoreTextView.text = "Highest Score: $highestScore"
     }
 
     override fun onResume() {
         super.onResume()
-        // Refresh scores from SharedPreferences
-        val sharedPref = this.getSharedPreferences("com.yourapp.preferences", Context.MODE_PRIVATE)
+        updateScoresFromSharedPreferences()
+    }
+
+    private fun updateScoresFromSharedPreferences() {
+        val sharedPref = getSharedPreferences("com.yourapp.preferences", Context.MODE_PRIVATE)
         val currentScore = sharedPref.getInt("currentScore", 0)
         val highestScore = sharedPref.getInt("highestScore", 0)
-
-        // Assuming you have TextViews in MainActivity similar to those in QuizActivity
-        val currentScoreTextView: TextView = findViewById(R.id.currentScore)
-        val highestScoreTextView: TextView = findViewById(R.id.highestScore)
-
         currentScoreTextView.text = currentScore.toString()
         highestScoreTextView.text = highestScore.toString()
     }
-
 }

@@ -47,7 +47,7 @@
         android:layout_below="@id/setupDatabaseButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Sign in to save your progress"
+        android:text="Sign up to save your progress"
         android:textColor="#FF6200EE"
         android:textSize="14sp" />
 
