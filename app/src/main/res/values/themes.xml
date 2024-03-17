@@ -5,5 +5,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.AreYouSmarterThanAnImmigrant" parent="Base.Theme.AreYouSmarterThanAnImmigrant" />
+    <style name="Theme.AreYouSmarterThanAnImmigrant" parent="Base.Theme.AreYouSmarterThanAnImmigrant">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
 </resources>

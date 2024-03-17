@@ -1,4 +1,4 @@
-    package com.lislal.areyousmarterthananimmigrant
+package com.lislal.areyousmarterthananimmigrant
 
 import android.content.Context
 import android.content.Intent
@@ -27,9 +27,16 @@ class MainActivity : AppCompatActivity() {
 
         // Set up click listeners
         startQuizButton.setOnClickListener {
-            // Start Quiz Activity (You'll need to create this Activity)
-            // Intent to navigate to the Quiz Activity
-            val intent = Intent(this, QuizActivity::class.java)
+            QuestionPoolManager.initializeQuestionPool {
+                // Once questions are loaded, start the QuestionActivity
+                val intent = Intent(this@MainActivity, QuizActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        val setupDatabaseButton: Button = findViewById(R.id.setupDatabaseButton)
+        setupDatabaseButton.setOnClickListener {
+            val intent = Intent(this, DatabaseSetupActivity::class.java)
             startActivity(intent)
         }
 

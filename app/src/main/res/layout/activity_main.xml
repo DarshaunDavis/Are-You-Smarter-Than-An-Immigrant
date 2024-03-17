@@ -7,39 +7,48 @@
     <!-- Include the header layout and assign an ID for positioning -->
     <include
         android:id="@+id/headerLayout"
-        layout="@layout/layout_header"/>
+        layout="@layout/layout_header" />
 
     <!-- Adjusted to be below the included header layout -->
     <TextView
         android:id="@+id/tauntTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/headerLayout"
-    android:layout_marginTop="20dp"
-    android:text="Can you beat the streak?"
-    android:textAlignment="center"
-    android:textSize="16sp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Can you beat the streak?"
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
     <!-- Other elements positioned relative to the tauntTextBox as before -->
     <Button
         android:id="@+id/startQuizButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/tauntTextBox"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Start Quiz"/>
+        android:text="Start Quiz" />
+
+    <Button
+        android:id="@+id/setupDatabaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startQuizButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Setup Database" />
 
     <TextView
         android:id="@+id/signInLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/setupDatabaseButton"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/startQuizButton"
         android:layout_marginTop="16dp"
         android:text="Sign in to save your progress"
-        android:textSize="14sp"
-        android:textColor="#FF6200EE" />
+        android:textColor="#FF6200EE"
+        android:textSize="14sp" />
 
 </RelativeLayout>
