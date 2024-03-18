@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.random.Random
 
@@ -21,6 +22,7 @@ class QuizActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
+
         displayNextQuestion()
 
         currentScoreTextView = findViewById(R.id.currentScore)
@@ -96,27 +98,13 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    // When an incorrect answer is selected
-    private fun onIncorrectAnswerSelected() {
-        // You might want to reset the current score or handle it differently depending on your app's logic
-        resetScore() // Only call this if you wish to reset the score on incorrect answers
-
-        // Navigate back to MainActivity
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish() // Close QuizActivity
-    }
-
     private fun incrementScore() {
         currentScore++
-        val sharedPref = getSharedPreferences("com.yourapp.preferences", Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putInt("currentScore", currentScore)
-            apply()
-        }
         updateScoresDisplay()
 
-        // Optionally, check if you need to update the highest score as well
+        val sharedPref = getSharedPreferences("com.yourapp.preferences", Context.MODE_PRIVATE)
+        highestScore = sharedPref.getInt("highestScore", 0)
+
         if (currentScore > highestScore) {
             highestScore = currentScore
             with(sharedPref.edit()) {
@@ -124,9 +112,20 @@ class QuizActivity : AppCompatActivity() {
                 apply()
             }
             updateScoresDisplay()
+
+            // Update high score in Firestore
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                FirebaseFirestore.getInstance().collection("users").document(user.uid)
+                    .update("highScore", highestScore)
+                    .addOnSuccessListener {
+                        // Successfully updated high score in Firestore
+                    }
+                    .addOnFailureListener {
+                        // Failed to update high score
+                    }
+            }
         }
     }
-
 
     private fun resetScore() {
         currentScore = 0
@@ -143,6 +142,17 @@ class QuizActivity : AppCompatActivity() {
     private fun updateScoresDisplay() {
         currentScoreTextView.text = currentScore.toString()
         highestScoreTextView.text = highestScore.toString()
+    }
+
+    // When an incorrect answer is selected
+    private fun onIncorrectAnswerSelected() {
+        // You might want to reset the current score or handle it differently depending on your app's logic
+        resetScore() // Only call this if you wish to reset the score on incorrect answers
+
+        // Navigate back to MainActivity
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // Close QuizActivity
     }
 }
 

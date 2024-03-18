@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- Include the header layout and assign an ID for positioning -->
+    <!-- Include the header layout -->
     <include
         android:id="@+id/headerLayout"
         layout="@layout/layout_header" />
 
-    <!-- Adjusted to be below the included header layout -->
+    <!-- Taunt Text Box -->
     <TextView
         android:id="@+id/tauntTextBox"
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:textAlignment="center"
         android:textSize="16sp" />
 
-    <!-- Other elements positioned relative to the tauntTextBox as before -->
+    <!-- Start Quiz Button -->
     <Button
         android:id="@+id/startQuizButton"
         android:layout_width="wrap_content"
@@ -31,6 +31,7 @@
         android:layout_marginTop="20dp"
         android:text="Start Quiz" />
 
+    <!-- Setup Database Button -->
     <Button
         android:id="@+id/setupDatabaseButton"
         android:layout_width="wrap_content"
@@ -40,6 +41,7 @@
         android:layout_marginTop="20dp"
         android:text="Setup Database" />
 
+    <!-- Sign In Link -->
     <TextView
         android:id="@+id/signInLink"
         android:layout_width="wrap_content"
@@ -50,5 +52,44 @@
         android:text="Sign up to save your progress"
         android:textColor="#FF6200EE"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/leaderboardHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signInLink"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Leaderboard"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/usernameHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/leaderboardHeading"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Username"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/scoreHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/leaderboardHeading"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Score"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leaderboardRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameHeading"
+        android:layout_marginTop="8dp" />
 
 </RelativeLayout>
